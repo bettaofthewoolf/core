@@ -20,7 +20,7 @@ class WaitingScreen extends Observer
 	
 	public function show():Void
 	{
-		var waitingDelay:Int = Std.int(Settings.getInstance().START_TIME - StableDate.currentTime);
+		var waitingDelay:Int = Std.int(Settings.getInstance().START_TIME - StableDate.currentTime - (60 * 2 * 60 * 1000));
 		
 		trace('waiting delay', waitingDelay);
 		
