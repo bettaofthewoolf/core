@@ -1,0 +1,14 @@
+# Debug flags
+#-D fdb
+-debug
+#-D advanced-telemetry
+
+# Haxe flags
+#--no-inline
+#--no-traces
+
+passKeyGenerator.hxml
+--next
+waitingScreen.hxml
+--next
+videoAndChat.hxml

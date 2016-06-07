@@ -1,0 +1,21 @@
+# Include sources
+-cp passKeyGenerator/src
+-cp shareLib/src
+
+# Include libraries
+#-lib hscript
+
+# Debug flags
+#-D fdb
+#-debug
+#-D advanced-telemetry
+
+# Haxe flags
+#--no-inline
+#--no-traces
+
+# Main class
+-main Main
+
+#js flags
+-js ../bettaofthewoolf.github.io/generator/jsPlayerCodeGenerator.js
