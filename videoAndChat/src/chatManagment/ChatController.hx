@@ -23,7 +23,7 @@ class ChatController
 		dataLoader.addEventListener(DataEvent.ON_LOAD, onDataLoaded);
 		dataLoader.load("chat.txt");
 		
-		var timer:Timer = new Timer(500);
+		var timer:Timer = new Timer(250);
 		timer.run = onUpdate;
 	}
 	
@@ -65,6 +65,14 @@ class ChatController
 			
 			var time:String = chatMessageParts[0];
 			
+			var sign:Int = 1;
+			
+			if (time.charAt(0) == "-")
+			{
+				time = time.substr(1, time.length);
+				sign = -1;
+			}
+			
 			var timeParts:Array<String> = time.split(":");
 			var dateParts:Array<String> = new Array<String>();
 			
@@ -77,7 +85,7 @@ class ChatController
 				
 			var name:String = chatMessageParts[1];
 			var message:String = chatMessageParts[2];
-			var messageTime:Float = Settings.getInstance().TODAY + (((hours * 60 + minutes) * 60 + seconds) * 1000) + messagesPadding;
+			var messageTime:Float = Settings.getInstance().START_TIME + (((hours * 60 + minutes) * 60 + seconds) * 1000) * sign + messagesPadding;
 			
 			if (messageTime < StableDate.currentTime && count > 0)
 			{

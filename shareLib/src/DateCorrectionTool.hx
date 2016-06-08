@@ -20,7 +20,8 @@ class DateCorrectionTool extends Observer
 	
 	function getPath():String
 	{
-		if (Browser.window.location.href.indexOf("bettaofthewoolf") != -1)
+		var currentLocation:String = Browser.window.location.href;
+		if (currentLocation.indexOf("bettaofthewoolf") != -1 || currentLocation.indexOf("localhost") != -1)
 			return "http://murigin.ru/auto/utc_time.php";
 		else
 			return "utc_time.php";
@@ -44,12 +45,12 @@ class DateCorrectionTool extends Observer
 		else
 			dataParts = e.data.split("\n");
 			
-		var correction:Float = Std.parseFloat(dataParts[0]);
+		var correction:Float = Std.parseFloat(dataParts[0]) * 1000;
 		StableDate.correct(correction);
 		
 		Settings.getInstance().TODAY_MONTH = Std.parseInt(dataParts[2]);
 		Settings.getInstance().TODAY_DAY = Std.parseInt(dataParts[3]);
-		Settings.getInstance().TODAY = Std.parseInt(dataParts[1]);
+		Settings.getInstance().TODAY = Std.parseFloat(dataParts[1]) * 1000;
 		
 		trace(dataParts[0]);
 		trace(Settings.getInstance().TODAY_MONTH);

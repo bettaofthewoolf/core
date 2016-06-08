@@ -234,8 +234,34 @@ class MainView
 		
 		chatMessages.innerHTML = text;
 		
+		var currentScroll:Int = chatMessages.scrollTop;
+		
 		var scrollHeight:Int = Math.floor(Math.max(chatMessages.scrollHeight, chatMessages.clientHeight));
 		chatMessages.scrollTop = scrollHeight - chatMessages.clientHeight;
+		
+		if(chatMessages.scrollTop == currentScroll)
+			scrollTextDelayed();
+	}
+	
+	var scrollDelay:Timer;
+	function scrollTextDelayed() 
+	{
+		if (scrollDelay == null)
+			scrollDelay = new Timer(100);
+			
+		scrollDelay.run = onScrollDelayed;
+	}
+	
+	function onScrollDelayed() 
+	{
+		var scrollHeight:Int = Math.floor(Math.max(chatMessages.scrollHeight, chatMessages.clientHeight));
+		chatMessages.scrollTop = scrollHeight - chatMessages.clientHeight;
+		
+		if (chatMessages.scrollTop != 0)
+		{
+			scrollDelay.stop();
+			scrollDelay = null;
+		}
 	}
 	
 	private function updateUsersList(e:UserListEvent = null):Void 
