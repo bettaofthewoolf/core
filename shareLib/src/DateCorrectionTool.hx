@@ -49,8 +49,8 @@ class DateCorrectionTool extends Observer
 		StableDate.correct(correction);
 		
 		Settings.getInstance().TODAY_MONTH = Std.parseInt(dataParts[2]);
-		Settings.getInstance().TODAY_DAY = Std.parseInt(dataParts[3]);
-		Settings.getInstance().TODAY = Std.parseFloat(dataParts[1]) * 1000;
+		Settings.getInstance().TODAY_DAY = Std.parseInt(dataParts[1]);
+		Settings.getInstance().TODAY = Std.parseFloat(dataParts[3]) * 1000;
 		
 		trace(dataParts[0]);
 		trace(Settings.getInstance().TODAY_MONTH);
