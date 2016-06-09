@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="canvas" width="400" height="400" style="border:1px solid #d3d3d3;background-color:#3366CC;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+
+	var canvasElement = document.getElementById('canvas');
+
+	var context;
+	var canvasSupported = isCanvasSupported();
+
+	if(!canvasSupported && typeof G_vmlCanvasManager !== "undefined") 
+	{
+		G_vmlCanvasManager.initElement(canvasElement);
+		limited_mode = true;
+		canvasSupported = true;
+	}
+
+	if(canvasSupported) 
+	{
+		context = canvasElement.getContext('2d');
+	}
+
+	function isCanvasSupported() 
+	{
+		var elem = document.createElement('canvas');
+		return !!(elem.getContext && elem.getContext('2d'));
+	}
+
+	function drawCircle(x, y, size, value, ccw)
+	{
+		var fullCircle = 2 * Math.PI;
+		
+		context.beginPath(); 
+		context.arc(x, y, size, 0, fullCircle, ccw);
+		context.fillStyle = "rgba(255, 255, 255, 0.3)";
+		context.fill();
+
+		context.beginPath();
+		context.arc(x, y, size, 0, fullCircle * value, ccw);
+		context.strokeStyle = "white";
+		context.lineWidth=2;
+		context.stroke();
+	}
+
+	window.requestAnimFrame = (function(){
+											  return  window.requestAnimationFrame       || 
+													  window.webkitRequestAnimationFrame || 
+													  window.mozRequestAnimationFrame    || 
+													  window.oRequestAnimationFrame      || 
+													  window.msRequestAnimationFrame     || 
+													  function(/* function */ callback, /* DOMElement */ element){
+														window.setTimeout(callback, 1000 / 60);
+													  };
+											})();
+											
+	function animloop()
+	{
+		render();
+		requestAnimFrame(animloop);
+	}
+
+
+	//setInterval(render, 30);
+	animloop();
+
+	var circleValue = 0;
+	function render()
+	{
+		context.clearRect(0, 0, 400, 400);
+		drawCircle(100, 75, 50, circleValue, false);
+		drawCircle(225, 75, 50, circleValue, true);
+		
+		circleValue += 0.01;
+		
+		if(circleValue >= 1)
+			circleValue = 0;
+	}
+</script> 
+
+</body>
+</html>

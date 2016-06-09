@@ -47,7 +47,7 @@
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="Webserver" />
-    <option testMovieCommand="..\..\bettaofthewoolf.github.io\start.html" />
+    <option testMovieCommand="..\..\bettaofthewoolf.github.io\index.html" />
   </options>
   <!-- Plugin storage -->
   <storage />
