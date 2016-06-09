@@ -51,7 +51,8 @@ class Main
 	
 	static private function onClick():Void 
 	{
-		traceOutput.innerText = "";
+		if(traceOutput != null)
+			traceOutput.innerText = "";
 		
 		var baseDateString:String = datePicker.value;
 		var baseDateParts:Array<String> = baseDateString.split("/");
