@@ -1,6 +1,5 @@
 package view;
 
-import events.ConvasEvents;
 import events.Observer;
 import haxe.Timer;
 import js.Browser;
@@ -27,6 +26,7 @@ class WaitingScreen extends Observer
 		super();
 		
 		buildUI();
+		tick();
 	}
 	
 	public function show():Void
@@ -37,17 +37,12 @@ class WaitingScreen extends Observer
 		
 		timer = new Timer(waitingDelay);
 		timer.run = onTimerIsEnd;
-		
-		convas.init("timerCanvas");
-	}
-	
-	private function onPreRender(e:ConvasEvents):Void 
-	{
-		tick();
 	}
 	
 	function tick() 
 	{
+		untyped __js__ ("requestAnimationFrame") (tick);
+		
 		StableDate.advanceTime();
 		var seconds:Float = (Settings.getInstance().START_TIME - StableDate.currentTime) / 1000;
 		var minutes:Float = seconds / 60;
@@ -66,16 +61,6 @@ class WaitingScreen extends Observer
 		updateUi(days, hours, minutes, seconds);
 	}
 	
-	function formatToTime(value:Float):String
-	{
-		var valueAsString:String = Std.string(value);
-		
-		if (valueAsString.length == 1)
-			valueAsString = "0" + valueAsString;
-			
-		return valueAsString;
-	}
-	
 	function onTimerIsEnd():Void
 	{
 		timer.stop();
@@ -92,19 +77,11 @@ class WaitingScreen extends Observer
 	
 	function buildUI():Void
 	{
-		convas = new ConvasSimple();
-		convas.addEventListener(ConvasEvents.PRE_RENDER, onPreRender);
-		
 		timerViewD = new TimerUnitViewController(Browser.document.getElementById("timeD"), dayTittles, 30);
 		timerViewH = new TimerUnitViewController(Browser.document.getElementById("timeH"), hoursTittles, 24);
 		timerViewM = new TimerUnitViewController(Browser.document.getElementById("timeM"), minuteTittles, 60);
 		timerViewS = new TimerUnitViewController(Browser.document.getElementById("timeS"), secondTittles, 60);
 		
 		updateUi(0, 0, 0, 0);
-		
-		convas.addChild(timerViewD.bgView);
-		convas.addChild(timerViewH.bgView);
-		convas.addChild(timerViewM.bgView);
-		convas.addChild(timerViewS.bgView);
 	}
 }
